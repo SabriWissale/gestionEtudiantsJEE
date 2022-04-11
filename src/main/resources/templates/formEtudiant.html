@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<div layout:fragment="content" th:align="center">
+
+    <div class="col-md-3">
+        <form method="post" th:action="@{save}" >
+            <div class="mb-3">
+                <label class="form-label">Nom : </label>
+                <input class="form-control" id="nom"  type="text" name="nom" th:value="${etudiant.nom}">
+                <span class="text-danger" th:errors="${etudiant.nom}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prenom : </label>
+                <input class="form-control" id="prenom"  type="text" name="prenom" th:value="${etudiant.prenom}">
+                <span class="text-danger" th:errors="${etudiant.prenom}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email : </label>
+                <input class="form-control" id="email"  type="text" name="email" th:value="${etudiant.email}">
+                <span class="text-danger" th:errors="${etudiant.email}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Date de Naissance : </label>
+                <input class="form-control" type="date" name="dateNaissance" th:value="${etudiant.dateNaissance}">
+                <span class="text-danger" th:errors="${etudiant.dateNaissance}"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">En regle : </label>
+                <input class="form-check-input" type="checkbox" name="enregle" th:checked="${etudiant.enRegle}">
+                <span class="text-danger" th:errors="${etudiant.enRegle}"></span>
+            </div>
+
+            <select name="genre">
+                <option th:each="genreOpt : ${T(com.baeldung.thymeleaf.model.Color).values()}"
+                        th:value="${colorOpt}" th:text="${colorOpt}"></option>
+            </select>
+
+            <div class="mb-3">
+                <button type="submit" class="uk-button uk-button-primary">Ajouter</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</html>

@@ -1,38 +1,41 @@
-package ma.enset.tp67.web;
-import lombok.AllArgsConstructor;
+package com.example.gestionetudiants.web;
 
-import ma.enset.tp67.entities.Patient;
-import ma.enset.tp67.repositories.PatientRepository;
+import com.example.gestionetudiants.entities.Etudiant;
+import com.example.gestionetudiants.repositories.EtudiantRepository;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.List;
 
 
 @Controller
+@Data
 @AllArgsConstructor
-public class PatientController {
+public class EtudiantController {
 
-    private PatientRepository patientRepository;
+    private EtudiantRepository etudiantRepository;
 
-    @GetMapping(path = "/index")
-    public String patients(Model model,
+    @GetMapping(path = "/user/index")
+    public String etudiants(Model model,
                            @RequestParam(name = "page",defaultValue = "0") int page,
                            @RequestParam(name = "size",defaultValue = "5") int size,
                            @RequestParam(name = "keyword",defaultValue = "") String keyword
     )
     {
-        Page<Patient> pagePatients=patientRepository.findByNomContains(keyword,PageRequest.of(page,size));
-        model.addAttribute("patients",pagePatients.getContent());
-        model.addAttribute("pages",new int[pagePatients.getTotalPages()]);
+        Page<Etudiant> pageEtudiants=etudiantRepository.findByNomContains(keyword,PageRequest.of(page,size));
+        model.addAttribute("etudiants",pageEtudiants.getContent());
+        model.addAttribute("pages",new int[pageEtudiants.getTotalPages()]);
         model.addAttribute("currentPage",page);
         model.addAttribute("keyword",keyword);
-        return "patients";
+
+        return "etudiants";
     }
 
     @GetMapping("/")
@@ -42,48 +45,60 @@ public class PatientController {
 
 
 
-    @GetMapping("/delete")
+    @GetMapping("/admin/delete")
     public String delete(Long id, String keyword, int page) {
-        patientRepository.deleteById(id);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        etudiantRepository.deleteById(id);
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
 
-    @GetMapping("/patients")
+
+    @GetMapping("/user/etudiants")
     @ResponseBody
-    public List<Patient> listPatients(){
-        return patientRepository.findAll();
+    public List<Etudiant> listEtudiants(){
+        return etudiantRepository.findAll();
     }
 
-    @GetMapping("/formPatient")
-    public String formPatient(Model model){
-        model.addAttribute("patient",new Patient());
-        return "formPatient";
+    @GetMapping("/admin/formEtudiant")
+    public String formEtudiant(Model model){
+        model.addAttribute("etudiant",new Etudiant());
+        return "formEtudiant";
     }
 
 
 
-    @PostMapping("/save")
-    public String save(Model model, @Valid Patient patient, BindingResult bindingResult,
+    @PostMapping("/admin/save")
+    public String save(Model model, @Valid Etudiant etudiant, BindingResult bindingResult,
                        @RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "")String keyword){
         if (bindingResult.hasErrors())
-            return "formPatient";
-        patientRepository.save(patient);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+            return "formEtudiant";
+        etudiantRepository.save(etudiant);
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
 
-    @GetMapping("/editPatient")
-    public String editPatient(Model model,Long id,String keyword,int page){
-        Patient patient = patientRepository.findById(id).orElse(null);
-        System.out.println(patient.getNom());
-        if (patient==null) throw new RuntimeException("Patient introuvable");
-
-        model.addAttribute("patient",patient);
+    @GetMapping("/admin/editEtudiant")
+    public String editEtudiant(Model model,Long id,
+                               @RequestParam(defaultValue = "") String keyword,
+                               @RequestParam(defaultValue = "0") int page){
+        Etudiant etudiant = etudiantRepository.findById(id).orElse(null);
+        if (etudiant==null) throw new RuntimeException("Etudiant introuvable");
+        model.addAttribute("etudiant",etudiant);
         model.addAttribute("keyword",keyword);
         model.addAttribute("page",page);
-        return "editPatient";
+        return "editEtudiant";
+    }
+
+    @GetMapping("/user/etudiantDetails")
+    public String etudiantDetails(Model model, Long id,
+                              @RequestParam(defaultValue = "") String keyword,
+                              @RequestParam(defaultValue = "0") int page){
+        Etudiant etudiant = etudiantRepository.findById(id).get();
+        model.addAttribute("etudiant", etudiant);
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("page",page);
+        return "etudiantDetails";
     }
 
 

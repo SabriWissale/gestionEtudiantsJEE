@@ -1,11 +1,11 @@
-package ma.enset.tp67.repositories;
+package com.example.gestionetudiants.repositories;
 
-import ma.enset.tp67.entities.Patient;
+import com.example.gestionetudiants.entities.Etudiant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PatientRepository extends JpaRepository<Patient, Long> {
+public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
 
-    Page<Patient> findByNomContains(String keyword, Pageable pageable);
+    Page<Etudiant> findByNomContains(String keyword, Pageable pageable);
 }

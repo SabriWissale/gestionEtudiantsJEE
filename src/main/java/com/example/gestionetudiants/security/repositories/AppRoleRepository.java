@@ -1,6 +1,7 @@
-package ma.enset.tp67.security.repositories;
+package com.example.gestionetudiants.security.repositories;
 
-import ma.enset.tp67.security.entities.AppRole;
+
+import com.example.gestionetudiants.security.entities.AppRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AppRoleRepository extends JpaRepository<AppRole, String> {

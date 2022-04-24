@@ -4,43 +4,58 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layout">
 
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des etudiants</title>
+</head>
+<body>
 <div layout:fragment="content">
 
     <div class="container mt-4">
         <div class="card">
-            <div class="card-header">liste patients</div>
+            <div class="card-header">liste etudiants</div>
             <div class="card-body">
-                <form method="get" th:action="@{index}">
-                    <label>keyword :</label>
+                <form method="get" th:action="@{/user/index}">
+                    <label>chercher :</label>
                     <input type="text" name="keyword" placeholder="Nom" th:value="${keyword}">
-                    <button type="submit" class="btn btn-primary">chercher</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search-plus" aria-hidden="true"></i>
+                        chercher</button>
                 </form>
 
                 <table class="table">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nom</th>
-                        <th>Date de Naissance</th>
-                        <th><i class="fa-solid fa-bacteria"></i>Malade status</th>
-                        <th>Score</th>
+                        <th><i class="fa fa-user" aria-hidden="true"></i>Nom</th>
+                        <th><i class="fa fa-user" aria-hidden="true"></i>Prenom</th>
+                        <th><i class="fa fa-envelope" aria-hidden="true"></i>email</th>
+                        <th><i class="fa fa-calendar" aria-hidden="true"></i>Date de Naissance</th>
+                        <th><i class="fa fa-check" aria-hidden="true"></i>en regle status</th>
+                        <th><i class="fa fa-venus-mars" aria-hidden="true"></i>genre</th>
                         <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="p:${patients}">
-                        <td th:text="${p.id}"></td>
-                        <td th:text="${p.nom}"></td>
-                        <td th:text="${p.dateNaissance}"></td>
-                        <td th:text="${p.malade}?'malade':'pas malade'"></td>
-                        <td th:text="${p.score}"></td>
+                    <tr th:each="e:${etudiants}">
+                        <td th:text="${e.id}"></td>
+                        <td th:text="${e.nom}"></td>
+                        <td th:text="${e.prenom}"></td>
+                        <td th:text="${e.email}"></td>
+                        <td th:text="${e.dateNaissance}"></td>
+                        <td th:text="${e.enRegle}?'en regle':'pas en regle'"></td>
+                        <td th:text="${e.genre}"></td>
+
                         <td sec:authorize="hasAuthority('ADMIN')">
-                            <a onclick="return confirm('Etes vous sure?')" class="uk-button uk-button-danger" th:href="@{delete(id=${p.id}, keyword=${keyword}, page=${currentPage})}">
+
+                            <a class="btn btn-info"
+                               th:href="@{/user/etudiantDetails(id=${e.id}, keyword=${keyword}, page=${currentPage})}"><i class="fa fa-info" aria-hidden="true"></i></a>
+
+                            <a onclick="return confirm('Etes vous sure?')" class="btn btn-danger" th:href="@{/admin/delete(id=${e.id}, keyword=${keyword}, page=${currentPage})}">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
-                            <a class="uk-button uk-button-primary"
-                               th:href="@{editPatient(id=${p.id}, keyword=${keyword}, page=${currentPage})}"><i
-                                    class="fas fa-user-edit"></i>
+
+                            <a class="btn btn-warning"
+                               th:href="@{/admin/editEtudiant(id=${e.id}, keyword=${keyword}, page=${currentPage})}"><i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
 
                         </td>
@@ -49,18 +64,19 @@
                 </table>
 
                 <ul class="nav nav-pills">
-                    <li ><a  th:href="@{index(page=${currentPage}-1, keyword=${keyword})}">Previous</a></li>
+                    <li ><a  th:href="@{/user/index(page=${currentPage}-1, keyword=${keyword})}">Previous</a></li>
                     <li th:each="page,status:${pages}">
 
                         <a th:class="${status.index==currentPage?'btn btn-primary ms-1':'btn btn-outline-primary ms-1'}"
                            th:text="${status.index}"
-                           th:href="@{index(page=${status.index},keyword=${keyword})}"></a>
+                           th:href="@{/user/index(page=${status.index},keyword=${keyword})}"></a>
                     </li>
-                    <li><a th:href="@{index(page=${currentPage}+1, keyword=${keyword})}">Next</a></li>
+                    <li><a th:href="@{/user/index(page=${currentPage}+1, keyword=${keyword})}">Next</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
 </div>
+</body>
 </html>

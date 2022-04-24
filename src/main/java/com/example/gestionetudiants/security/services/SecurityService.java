@@ -1,7 +1,8 @@
-package ma.enset.tp67.security.services;
+package com.example.gestionetudiants.security.services;
 
-import ma.enset.tp67.security.entities.AppRole;
-import ma.enset.tp67.security.entities.AppUser;
+
+import com.example.gestionetudiants.security.entities.AppRole;
+import com.example.gestionetudiants.security.entities.AppUser;
 
 public interface SecurityService {
 

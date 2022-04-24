@@ -1,11 +1,11 @@
-package ma.enset.tp67.security.services;
+package com.example.gestionetudiants.security.services;
 
+import com.example.gestionetudiants.security.entities.AppRole;
+import com.example.gestionetudiants.security.entities.AppUser;
+import com.example.gestionetudiants.security.repositories.AppRoleRepository;
+import com.example.gestionetudiants.security.repositories.AppUserRepository;
 import groovy.util.logging.Slf4j;
 import lombok.AllArgsConstructor;
-import ma.enset.tp67.security.entities.AppRole;
-import ma.enset.tp67.security.entities.AppUser;
-import ma.enset.tp67.security.repositories.AppRoleRepository;
-import ma.enset.tp67.security.repositories.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

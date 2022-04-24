@@ -1,4 +1,4 @@
-package ma.enset.tp67.security.entities;
+package com.example.gestionetudiants.security.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

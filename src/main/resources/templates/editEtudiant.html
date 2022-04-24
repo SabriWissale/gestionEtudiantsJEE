@@ -6,32 +6,53 @@
 <div layout:fragment="content" th:align="center">
 
     <div class="col-md-3">
-        <form method="post" th:action="@{save(page=${page},keyword=${keyword})}">
+        <form method="post" th:action="@{/admin/save(page=${page},keyword=${keyword})}">
             <div class="mb-3">
                 <label class="form-label">ID : </label>
-                <label th:text="${patient.id}"></label>
-                <input class="form-control" name="id" type="hidden" th:value="${patient.id}">
+                <label th:text="${etudiant.id}"></label>
+                <input class="form-control" name="id" type="hidden" th:value="${etudiant.id}">
             </div>
             <div class="mb-3">
                 <label class="form-label">Nom : </label>
-                <input id="nom" class="form-control" type="text" name="nom" th:value="${patient.nom}">
-                <span class="uk-text-danger" th:errors="${patient.nom}"></span>
+                <input id="nom" class="form-control" type="text" name="nom" th:value="${etudiant.nom}">
+                <span class="uk-text-danger" th:errors="${etudiant.nom}"></span>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label">Prenom : </label>
+                <input class="form-control" id="prenom"  type="text" name="prenom" th:value="${etudiant.prenom}">
+                <span class="text-danger" th:errors="${etudiant.prenom}"></span>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email : </label>
+                <input class="form-control" id="email"  type="text" name="email" th:value="${etudiant.email}">
+                <span class="text-danger" th:errors="${etudiant.email}"></span>
+            </div>
+
             <div class="mb-3">
                 <label class="form-label">Date de Naissance : </label>
-                    <input class="form-control" type="date" name="dateNaissance" th:value="${patient.dateNaissance}">
-                <span class="uk-text-danger" th:errors="${patient.dateNaissance}"></span>
+                    <input class="form-control" type="date" name="dateNaissance" th:value="${etudiant.dateNaissance}">
+                <span class="uk-text-danger" th:errors="${etudiant.dateNaissance}"></span>
             </div>
+
             <div class="mb-3">
-                <label class="form-label">Malade : </label>
-                    <input class="form-check-input" type="checkbox" name="malade" th:checked="${patient.malade}">
-                <span class="uk-text-danger" th:errors="${patient.malade}"></span>
+                <label class="form-label">En regle : </label>
+                <input class="form-check-input" type="checkbox" name="enRegle" th:checked="${etudiant.enRegle}">
+                <span class="text-danger" th:errors="${etudiant.enRegle}"></span>
             </div>
+
             <div class="mb-3">
-                <label class="form-label">Score : </label>
-                <input class="form-control" type="number" name="score" th:value="${patient.score}">
-                <span class="uk-text-danger" th:errors="${patient.score}"></span>
+                <select name="genre">
+                    <option th:each="genreOpt : ${T(com.example.gestionetudiants.enumerations.StudentGenre).values()}"
+                            th:value="${genreOpt}" th:text="${genreOpt}" th:selected="${etudiant.genre}">
+
+                    </option>
+                </select>
             </div>
+
+
+
             <div class="mb-3">
                 <button type="submit" class="uk-button uk-button-primary">Modifier</button>
             </div>

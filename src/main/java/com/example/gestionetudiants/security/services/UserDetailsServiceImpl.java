@@ -1,7 +1,6 @@
-package ma.enset.tp67.security.services;
+package com.example.gestionetudiants.security.services;
 
-import lombok.AllArgsConstructor;
-import ma.enset.tp67.security.entities.AppUser;
+import com.example.gestionetudiants.security.entities.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

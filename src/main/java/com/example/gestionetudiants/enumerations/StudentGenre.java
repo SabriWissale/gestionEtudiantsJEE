@@ -1,7 +1,7 @@
-package com.raw.userservice.enumeration;
+package com.example.gestionetudiants.enumerations;
 
-public enum AccountStatus {
-    ACCOUNT_ACTIVE,
-    ACCOUNT_DISABLED
+public enum StudentGenre {
+    MASCULIN,
+    FEMININ
 
 }
